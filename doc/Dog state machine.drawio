@@ -1,0 +1,98 @@
+<mxfile host="app.diagrams.net" modified="2024-11-29T13:14:35.817Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:132.0) Gecko/20100101 Firefox/132.0" etag="345F9_gsViolzp4BwEfk" version="24.6.4" type="device">
+  <diagram name="Page-1" id="-_c0seKoBfDYhx04osqT">
+    <mxGraphModel dx="1035" dy="685" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-1" value="&lt;div&gt;IDLE&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="110" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-8" value="speed &amp;gt; limit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-2" target="TMPYYolNM-6K3mJDf2R5-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="320" />
+              <mxPoint x="400" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-10" value="dist &amp;lt; 200" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-2" target="TMPYYolNM-6K3mJDf2R5-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="170" y="390" />
+              <mxPoint x="170" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-17" value="dist &amp;gt; 500" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-2" target="TMPYYolNM-6K3mJDf2R5-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="220" />
+              <mxPoint x="240" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-2" value="WATCHING" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-9" value="&lt;div&gt;back off 100&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-3" target="TMPYYolNM-6K3mJDf2R5-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="290" />
+              <mxPoint x="400" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-11" value="dist &amp;lt; 200" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-3" target="TMPYYolNM-6K3mJDf2R5-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="390" />
+              <mxPoint x="570" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-3" value="BARKING" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-14" value="dist &amp;gt; 200" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-4" target="TMPYYolNM-6K3mJDf2R5-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630" y="390" />
+              <mxPoint x="630" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-4" value="BITING" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-5" target="TMPYYolNM-6K3mJDf2R5-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="390" />
+              <mxPoint x="240" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-13" value="&lt;div&gt;dist &amp;gt; 200&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="TMPYYolNM-6K3mJDf2R5-12">
+          <mxGeometry x="-0.0171" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-5" value="GREETING" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-6" value="dist &amp;lt; 500" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TMPYYolNM-6K3mJDf2R5-1" target="TMPYYolNM-6K3mJDf2R5-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="220" />
+              <mxPoint x="180" y="220" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMPYYolNM-6K3mJDf2R5-16" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Dog state machine&lt;br&gt;&lt;/h1&gt;&lt;p&gt;A dog is changing state as someone is approaching&lt;br&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="370" y="100" width="350" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
