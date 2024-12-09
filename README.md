@@ -4,9 +4,11 @@ Pierre Rossel, 2020-12-03, version 1.0.0
 
 Based on <https://bitbucket.org/pierrerossel/state-machine-arduino-demo>
 
+![Dog illustration](doc/DogLeashRobot.jpg)
+
 Using a state machine facilitate the creation of an application that has different tasks to do at different times and separate the code in different state classes.
 
-In this demo, the scenario is a dog watching someone. The doc is attached with a 200 cm leash. Depending on the distance between them and the speed, the dog can be friendly and great the visitor or bark and bite when in range.
+In this demo, the scenario is a dog watching someone. The dog is attached with a 200 cm leash. Depending on the distance between them and the speed, the dog can be friendly and great the visitor or bark and bite when in range.
 
 ![States diagram](doc/DogStateMachine.drawio.png "States diagram")
 
@@ -36,21 +38,27 @@ Note: The code has not been tested so far in this mode.
 
 * Copy the StateMachine.h file in your project
 * Create one or more files to contain your states, each state being a class inherited from the base State class. See States.h for examples
-* In your own state class, override at lease the loop function and code here what you would do in the main loop() function for that state. Don't forget to return NULL if you don't want to switch to another state.
+* In your own state class, override at least the loop function and code here what you would do in the main loop() function for that state. Don't forget to return NULL if you don't want to switch to another state.
 
 ```CPP
 // File States.h
 
 #include "StateMachine.h"
 
-class StateBlink : public State {
-
-    State * loop() {
-      digitalWrite(LED_BUILTIN, millis() % 1000 > 500);
-      return NULL;
-    }
-
+class StateIdle : public State
+{
+  State *loop();
 };
+
+State *StateIdle::loop()
+{
+  if (distance < 500) {
+    return new StateWatching();
+  }
+
+  // By default, always return NULL to stay in current state
+  return NULL;
+}
 ```
 
 * Override enter() or exit() if you need to execute someting when the state enters or leaves
@@ -66,7 +74,7 @@ StateMachine sm;
 
 ```CPP
 void setup() {
-  sm.changeState(new StateBlink());
+  sm.changeState(new StateIdle());
 }
 ```
 
@@ -95,7 +103,7 @@ void loop() {
   sm.loop();
 
   if (/* some condition */) {
-      sm.changeState(new StateGlow());
+      sm.changeState(new StateWatching());
   }
 }
 ```
@@ -107,27 +115,23 @@ When an object is returned from your state loop() function, the state machine sw
 ```CPP
 // File States.h
 
-class StateGlow : public State {
+State *StateIdle::loop()
+{
+  if (distance < 500) {
+    return new StateWatching();
+  }
 
-    State *loop() {
-
-      // ...
-
-      // Change state after some time.
-      // Note: We can only create (new) a new object of a class
-      // that has been already declared before this one.
-      return getStateTime() > 5000 ? new StateBlink() : NULL;
-    }
-
-};
+  // By default, always return NULL to stay in current state
+  return NULL;
+}
 ```
 
 #### Known limitation
 
 The new state class must be defined above or you will get a compilation error. So order your state classes accordingly.
 
-If you need to cross reference your states, here are some not tested ways to explore:
+If you need to cross reference your states, here are some ways to explore:
 
-* Implement the loop() function after all state classes declaration. (See StateBlink and StateGlow example)
-* Split state classes declarations and implementations
-* Use some variable declared in main program *before* including your states file(s). They will be visible by all states. Then use the main loop to trigger the state changes based on these values.
+* Split state all classes declarations and implementations, as in this demo
+* Implement only the loop() function after all state classes declaration. (See StateBlink and StateGlow example in [state-machine-arduino-demo](https://bitbucket.org/pierrerossel/state-machine-arduino-demo))
+* Use a variables declared in main program. Declare it as extern in the states.h file. It will be visible by all states. Then use the main loop to trigger the state changes based on the values.
