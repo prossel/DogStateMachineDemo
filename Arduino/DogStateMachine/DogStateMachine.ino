@@ -9,6 +9,12 @@
 #include "States.h"
 
 int distance = 1000;
+float speed = 0;
+
+// speed calculation
+int previousDistance = 0;
+unsigned long previousMs = 0;
+
 
 // mode of operation
 enum Mode {
@@ -37,6 +43,9 @@ void loop() {
     case ANALOG:
 
       distance = analogRead(A0);
+
+      updateSpeed();
+
       if (Serial.available() > 0) {
         mode = SIM_SERIAL;
         Serial.println("Switching to simulation mode.");
@@ -61,6 +70,8 @@ void loop() {
           mode = ANALOG;
           Serial.println("Switching to analog mode.");
         }
+
+        updateSpeed();
       }
       break;
   }
@@ -71,4 +82,29 @@ void loop() {
   sm.loop();
 
   delay(100);
+}
+
+void updateSpeed() {
+  unsigned long ms = millis();
+
+  if (previousMs == 0) {
+    previousMs = ms;
+    previousDistance = distance;
+    return;
+  }
+
+  unsigned long deltaMs = ms - previousMs;
+  int deltaDistance = distance - previousDistance;
+
+  speed = - deltaDistance / (deltaMs / 1000.0);
+
+  previousMs = ms;
+  previousDistance = distance;
+
+  // Serial.print("Distance:");
+  // Serial.print(distance);
+  // Serial.print("\t");
+
+  // Serial.print("Speed:");
+  // Serial.println(speed);
 }

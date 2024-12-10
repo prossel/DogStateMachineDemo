@@ -9,6 +9,9 @@
 // distance is a global variable declared in DogStateMachine.ino
 extern int distance;
 
+// speed is a global variable declared in DogStateMachine.ino
+extern float speed;
+
 // see doc/Dog State Machine.png for the state diagram
 
 class StateIdle : public State
@@ -20,7 +23,7 @@ class StateIdle : public State
 
 class StateWatching : public State
 {
-  float speed = 0.0;
+  int limit = 180;
   void enter();
   State *loop();
   void exit(); 
@@ -78,13 +81,6 @@ void StateIdle::exit()
 void StateWatching::enter()
 {
   Serial.println(">>>>>>>>>>>>> StateWatching.enter()");
-  
-  // simulate speed
-  if (distance < 350) {
-    speed = 3.0;
-  } else {
-    speed = 1.0;
-  }
 }
 
 State *StateWatching::loop()
@@ -97,7 +93,7 @@ State *StateWatching::loop()
     return new StateGreeting();
   }
 
-  if (speed > 2) {
+  if (speed > limit) {
     return new StateBarking();
   }
 
