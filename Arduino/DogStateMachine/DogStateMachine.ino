@@ -15,14 +15,13 @@ float speed = 0;
 int previousDistance = 0;
 unsigned long previousMs = 0;
 
-
 // mode of operation
 enum Mode {
-  ANALOG,    // read distance from analog input
-  SIM_SERIAL // read distance from serial input
+  ANALOG,     // read distance from analog input
+  SIM_SERIAL  // read distance from serial input
 };
 
-Mode mode = SIM_SERIAL;
+Mode mode = ANALOG;
 
 StateMachine sm;
 
@@ -33,18 +32,27 @@ void setup() {
   Serial.println("\n\nSend a distance (0 .. 1023) in cm to simulate a distance sensor ");
   Serial.println("or an empty line to go back to reading the distance on an analog input.");
 
+  pinMode(LED_BUILTIN, OUTPUT);
+
   sm.changeState(new StateIdle());
 }
 
 void loop() {
+  static unsigned long lastAnalogRead = 0;
+  unsigned long ms = millis();
 
   switch (mode) {
 
     case ANALOG:
 
-      distance = analogRead(A0);
+      // Non blocking code every 100 ms (avoir using delay())
+      if (ms - lastAnalogRead > 100) {
+        lastAnalogRead = ms;
 
-      updateSpeed();
+        distance = analogRead(A0);
+
+        updateSpeed();
+      }
 
       if (Serial.available() > 0) {
         mode = SIM_SERIAL;
@@ -54,9 +62,9 @@ void loop() {
       }
 
     case SIM_SERIAL:
-    
+
       if (Serial.available() > 0) {
-        
+
         // Try to read an int
         distance = Serial.parseInt();
 
@@ -80,8 +88,6 @@ void loop() {
   // Serial.println(distance);
 
   sm.loop();
-
-  delay(100);
 }
 
 void updateSpeed() {
@@ -96,15 +102,15 @@ void updateSpeed() {
   unsigned long deltaMs = ms - previousMs;
   int deltaDistance = distance - previousDistance;
 
-  speed = - deltaDistance / (deltaMs / 1000.0);
+  speed = -deltaDistance / (deltaMs / 1000.0);
 
   previousMs = ms;
   previousDistance = distance;
 
-  // Serial.print("Distance:");
-  // Serial.print(distance);
-  // Serial.print("\t");
+  Serial.print("Distance:");
+  Serial.print(distance);
+  Serial.print("\t");
 
-  // Serial.print("Speed:");
-  // Serial.println(speed);
+  Serial.print("Speed:");
+  Serial.println(speed);
 }

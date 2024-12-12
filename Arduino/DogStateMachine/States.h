@@ -59,6 +59,7 @@ class StateBiting : public State
 void StateIdle::enter()
 {
   Serial.println(">>>>>>>>>>>>> StateIdle.enter()");
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 State *StateIdle::loop()
@@ -81,10 +82,18 @@ void StateIdle::exit()
 void StateWatching::enter()
 {
   Serial.println(">>>>>>>>>>>>> StateWatching.enter()");
+
+  // Turn on the LED
+  digitalWrite(LED_BUILTIN, HIGH);
+
 }
 
 State *StateWatching::loop()
 {
+  if (speed > limit) {
+    return new StateBarking();
+  }
+
   if (distance > 500) {
     return new StateIdle();
   }
@@ -92,11 +101,7 @@ State *StateWatching::loop()
   if (distance < 200) {
     return new StateGreeting();
   }
-
-  if (speed > limit) {
-    return new StateBarking();
-  }
-
+  
   return NULL;
 }
 
@@ -119,6 +124,16 @@ State *StateGreeting::loop()
   if (distance > 200) {
     return new StateWatching();
   }
+
+  // Ramp the LED intensity up and down
+  long period = 2 * 1000L;
+  float intensity = (millis() % period) * 1.0 / period; // 0.0 ... 1.0
+  
+  // Custom non blocking PWM code for non PWM pin
+  long pwmPeriod = 20 * 1000L; // microseconds
+  long timePwm = micros() % pwmPeriod;
+  bool high = timePwm < pwmPeriod * intensity;
+  digitalWrite(LED_BUILTIN, high);
 
   return NULL;
 }
@@ -149,6 +164,10 @@ State *StateBarking::loop()
     return new StateBiting();
   }
 
+  // Blink the LED medium
+  digitalWrite(LED_BUILTIN, millis() % 1000 < 50);
+
+
   return NULL;
 }
 
@@ -171,6 +190,10 @@ State *StateBiting::loop()
   if (distance > 200) {
     return new StateBarking();
   }
+
+  // Blink the LED fast
+  digitalWrite(LED_BUILTIN, (millis() / 100) % 2);
+
   return NULL;
 }
 
